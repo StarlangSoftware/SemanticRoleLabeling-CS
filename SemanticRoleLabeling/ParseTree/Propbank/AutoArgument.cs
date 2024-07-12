@@ -19,11 +19,19 @@ namespace SemanticRoleLabeling.ParseTree.Propbank
             this.secondLanguage = secondLanguage;
         }
 
+        /// <summary>
+        /// Given the parse tree and the frame net, the method collects all leaf nodes and tries to set a propbank argument
+        /// label to them. Specifically it tries all possible argument types one by one ARG0 first, then ARG1, then ARG2 etc.
+        /// Each argument type has a special function to accept. The special function checks basically if there is a specific
+        /// type of ancestor (specific to the argument, for example SUBJ for ARG0), or not.
+        /// </summary>
+        /// <param name="parseTree">Parse tree for semantic role labeling</param>
+        /// <param name="frameset">Frame net used in labeling.</param>
         public void autoArgument(ParseTreeDrawable parseTree, Frameset frameset)
         {
-            NodeDrawableCollector nodeDrawableCollector =
+            var nodeDrawableCollector =
                 new NodeDrawableCollector((ParseNodeDrawable) parseTree.GetRoot(), new IsTransferable(secondLanguage));
-            List<ParseNodeDrawable> leafList = nodeDrawableCollector.Collect();
+            var leafList = nodeDrawableCollector.Collect();
             foreach (var parseNode in leafList)
             {
                 if (parseNode.GetLayerData(ViewLayerType.PROPBANK) == null)

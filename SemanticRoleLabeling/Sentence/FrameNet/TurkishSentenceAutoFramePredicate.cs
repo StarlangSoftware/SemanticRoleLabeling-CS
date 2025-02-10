@@ -24,7 +24,7 @@ namespace SemanticRoleLabeling.Sentence.FrameNet
         {
             var candidateList = sentence.PredicateFrameCandidates(_frameNet);
             foreach (var word in candidateList){
-                word.SetArgument("PREDICATE$NONE$" + word.GetSemantic());
+                word.SetArgumentList("PREDICATE$NONE$" + word.GetSemantic());
             }
             if (candidateList.Count > 0)
             {

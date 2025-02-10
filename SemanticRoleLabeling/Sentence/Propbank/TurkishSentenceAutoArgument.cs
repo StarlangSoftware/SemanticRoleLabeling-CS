@@ -20,9 +20,9 @@ namespace SemanticRoleLabeling.Sentence.Propbank
             for (var i = 0; i < sentence.WordCount(); i++)
             {
                 var word = (AnnotatedWord) sentence.GetWord(i);
-                if (word.GetArgument() != null && word.GetArgument().GetArgumentType().Equals("PREDICATE"))
+                if (word.GetArgumentList() != null && word.GetArgumentList().ContainsPredicate())
                 {
-                    predicateId = word.GetArgument().GetId();
+                    predicateId = word.GetSemantic();
                     break;
                 }
             }
@@ -32,17 +32,17 @@ namespace SemanticRoleLabeling.Sentence.Propbank
                 for (var i = 0; i < sentence.WordCount(); i++)
                 {
                     var word = (AnnotatedWord) sentence.GetWord(i);
-                    if (word.GetArgument() == null)
+                    if (word.GetArgumentList() == null)
                     {
                         if (word.GetShallowParse() != null && word.GetShallowParse().Equals("ÖZNE"))
                         {
                             if (word.GetParse() != null && word.GetParse().ContainsTag(MorphologicalTag.PASSIVE))
                             {
-                                word.SetArgument("ARG1$" + predicateId);
+                                word.SetArgumentList("ARG1$" + predicateId);
                             }
                             else
                             {
-                                word.SetArgument("ARG0$" + predicateId);
+                                word.SetArgumentList("ARG0$" + predicateId);
                             }
 
                             modified = true;
@@ -51,7 +51,7 @@ namespace SemanticRoleLabeling.Sentence.Propbank
                         {
                             if (word.GetShallowParse() != null && word.GetShallowParse().Equals("NESNE"))
                             {
-                                word.SetArgument("ARG1$" + predicateId);
+                                word.SetArgumentList("ARG1$" + predicateId);
                                 modified = true;
                             }
                         }

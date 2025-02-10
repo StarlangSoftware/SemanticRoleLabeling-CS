@@ -26,7 +26,7 @@ namespace SemanticRoleLabeling.Sentence.Propbank
         {
             var candidateList = sentence.PredicateCandidates(_framesetList);
             foreach (var word in candidateList){
-                word.SetArgument("PREDICATE$" + word.GetSemantic());
+                word.SetArgumentList("PREDICATE$" + word.GetSemantic());
             }
             if (candidateList.Count > 0)
             {
